@@ -1140,3 +1140,20 @@ footer {
     font-size: var(--fs-lg);
   }
 }
+
+/* Носії: чипи замість чекбоксів */
+.items.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.opt.off {
+  cursor: not-allowed;
+}
+.opt.off span {
+  opacity: 0.45;
+}
+.opt.off:hover span {
+  color: var(--text);
+  background: var(--bg);
+}
