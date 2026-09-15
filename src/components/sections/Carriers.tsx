@@ -67,24 +67,18 @@ export function Carriers({ brief }: { brief: BriefApi }) {
                 <span className="pm" />
               </button>
               {isOpen && (
-                <div className="items" id={`cg-${g.id}`}>
-                  {g.items.map((item) => {
-                    const checked = state.car.includes(item.id);
-                    return (
-                      <div className="itm" key={item.id}>
-                        <label className={`check${locked ? " off" : ""}`}>
-                          <input
-                            type="checkbox"
-                            checked={checked}
-                            disabled={locked}
-                            onChange={(e) => toggleItem(item.id, e.target.checked)}
-                          />
-                          <span className="box" />
-                          <span className="nm">{item.name[lang]}</span>
-                        </label>
-                      </div>
-                    );
-                  })}
+                <div className="items chips" id={`cg-${g.id}`}>
+                  {g.items.map((item) => (
+                    <label className={`opt${locked ? " off" : ""}`} key={item.id}>
+                      <input
+                        type="checkbox"
+                        checked={state.car.includes(item.id)}
+                        disabled={locked}
+                        onChange={(e) => toggleItem(item.id, e.target.checked)}
+                      />
+                      <span>{item.name[lang]}</span>
+                    </label>
+                  ))}
                 </div>
               )}
             </div>
