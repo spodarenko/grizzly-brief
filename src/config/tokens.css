@@ -80,3 +80,10 @@
   --hi: #3a1524;
   --hi-ink: #ff8fb1;
 }
+
+/* Параметри UI: висота хедера, відступи степера. Брейкпоінти — у docs/style-guide.md */
+:root {
+  --header-h: 80px;
+  --stepper-pad: 24px;
+  --stepper-offset: 170px;
+}
