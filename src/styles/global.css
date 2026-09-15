@@ -15,8 +15,8 @@ body {
   min-width: 320px;
   background: var(--bg);
   color: var(--text);
-  font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 15px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-md);
   font-synthesis: none;
   -webkit-font-smoothing: antialiased;
 }
@@ -26,7 +26,7 @@ p {
 }
 @media (max-width: 60rem) {
   body {
-    font-size: 14px;
+    font-size: var(--fs-base);
   }
   p {
     line-height: 180%;
@@ -66,7 +66,7 @@ a {
   display: inline-block;
   padding: 4px 8px;
   line-height: 1;
-  font-size: 13px;
+  font-size: var(--fs-sm);
   font-weight: 500;
   background: var(--strong);
   color: var(--inverted);
@@ -105,7 +105,7 @@ a {
   position: sticky;
   top: 0;
   z-index: 10;
-  min-height: 80px;
+  min-height: var(--header-h);
   padding: 24px var(--pad);
   display: flex;
   align-items: center;
@@ -119,7 +119,7 @@ a {
   color: var(--strong);
   letter-spacing: -0.02em;
   white-space: nowrap;
-  font-size: 20px;
+  font-size: var(--fs-2xl);
   line-height: 1.35;
   text-decoration: none;
 }
@@ -133,7 +133,7 @@ a {
 }
 @media (max-width: 60rem) {
   .top .mark {
-    font-size: 18px;
+    font-size: var(--fs-xl);
   }
 }
 .top nav {
@@ -179,7 +179,7 @@ section:first-of-type {
 }
 
 h1 {
-  font-size: 28px;
+  font-size: var(--fs-4xl);
   font-weight: 700;
   color: var(--strong);
   margin: 0 0 16px;
@@ -189,7 +189,7 @@ h1 {
 }
 @media (max-width: 60rem) {
   h1 {
-    font-size: 22px;
+    font-size: var(--fs-3xl);
   }
 }
 .kicker {
@@ -209,7 +209,7 @@ h1 {
   margin: 0 0 24px;
 }
 .title h3 {
-  font-size: 16px;
+  font-size: var(--fs-lg);
   font-weight: 700;
   color: var(--strong);
   margin: 0 0 12px;
@@ -262,14 +262,14 @@ h1 {
 .cells .val {
   color: var(--strong);
   font-weight: 500;
-  font-size: 28px;
+  font-size: var(--fs-4xl);
   line-height: 1.35;
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
 }
 @media (max-width: 60rem) {
   .cells .val {
-    font-size: 22px;
+    font-size: var(--fs-3xl);
   }
 }
 
@@ -344,7 +344,7 @@ pre code {
 }
 .step h4 {
   margin: 0;
-  font-size: 16px;
+  font-size: var(--fs-lg);
   font-weight: 700;
   color: var(--strong);
   display: flex;
@@ -399,7 +399,7 @@ ul.marks li::before {
 /* ─── controls ───────────────────────────────────────────────────── */
 .btn {
   font-family: inherit;
-  font-size: 14px;
+  font-size: var(--fs-base);
   font-weight: 500;
   line-height: 1;
   padding: 13px 20px;
@@ -442,7 +442,7 @@ ul.marks li::before {
   text-decoration-thickness: 1px;
 }
 .btn.sm {
-  font-size: 13px;
+  font-size: var(--fs-sm);
   padding: 9px 14px;
 }
 .btn[disabled] {
@@ -465,13 +465,13 @@ ul.marks li::before {
   min-width: 0;
 }
 .field .lab {
-  font-size: 11px;
+  font-size: var(--fs-2xs);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--faint);
 }
 .field .hint {
-  font-size: 11px;
+  font-size: var(--fs-2xs);
   color: var(--faint);
   line-height: 170%;
 }
@@ -480,7 +480,7 @@ ul.marks li::before {
 }
 .input {
   font-family: inherit;
-  font-size: 14px;
+  font-size: var(--fs-base);
   color: var(--strong);
   width: 100%;
   background: var(--bg);
@@ -591,7 +591,7 @@ footer {
   justify-content: center;
   align-items: baseline;
   gap: 14px 36px;
-  font-size: 13px;
+  font-size: var(--fs-sm);
   color: var(--faint);
 }
 .fnav a {
@@ -608,7 +608,7 @@ footer {
   max-width: 56rem;
   margin: 20px auto 0;
   color: var(--faint);
-  font-size: 13px;
+  font-size: var(--fs-sm);
   line-height: 190%;
 }
 
@@ -632,7 +632,7 @@ footer {
 }
 .langs button {
   font-family: inherit;
-  font-size: 13px;
+  font-size: var(--fs-sm);
   font-weight: 500;
   line-height: 1;
   padding: 9px 12px;
@@ -730,7 +730,7 @@ footer {
 .opt span {
   display: block;
   padding: 11px 16px;
-  font-size: 14px;
+  font-size: var(--fs-base);
   line-height: 1.3;
   color: var(--text);
   background: var(--bg);
@@ -758,7 +758,7 @@ footer {
 }
 /* степер питань: горизонтальний, над блоками */
 #questions .qb {
-  scroll-margin-top: 110px;
+  scroll-margin-top: var(--stepper-offset);
 }
 .qmark {
   display: none;
@@ -769,22 +769,22 @@ footer {
 .hsteps {
   list-style: none;
   margin: 0 calc(var(--pad) * -1) 24px;
-  padding: 24px var(--pad) var(--vpad);
+  padding: var(--stepper-pad) var(--pad) var(--vpad);
   display: flex;
   align-items: center;
   overflow-x: auto;
   position: sticky;
-  top: calc(env(safe-area-inset-top, 0px) + 80px);
+  top: calc(env(safe-area-inset-top, 0px) + var(--header-h));
   z-index: 5;
   background: var(--bg);
   border-bottom: 1px solid var(--line);
 }
 #questions .qb {
-  scroll-margin-top: 170px;
+  scroll-margin-top: var(--stepper-offset);
 }
 /* прилиплий степер: низ = верх */
 .hsteps.stuck {
-  padding-bottom: 24px;
+  padding-bottom: var(--stepper-pad);
 }
 .hsteps li {
   display: flex;
@@ -815,7 +815,7 @@ footer {
   background: none;
   cursor: pointer;
   font-family: inherit;
-  font-size: 14px;
+  font-size: var(--fs-base);
   color: var(--faint);
   white-space: nowrap;
 }
@@ -833,7 +833,7 @@ footer {
   height: 24px;
   display: grid;
   place-items: center;
-  font-size: 12px;
+  font-size: var(--fs-xs);
   font-weight: 500;
   line-height: 1;
   color: var(--faint);
@@ -888,7 +888,7 @@ footer {
   box-shadow: inset 0 0 0 1px var(--line-strong);
 }
 .qt {
-  font-size: 14px;
+  font-size: var(--fs-base);
   font-weight: 500;
   color: var(--strong);
   line-height: 170%;
@@ -923,7 +923,7 @@ footer {
 }
 .pkg h4 {
   margin: 0;
-  font-size: 20px;
+  font-size: var(--fs-2xl);
   font-weight: 700;
   color: var(--strong);
   letter-spacing: -0.02em;
@@ -943,21 +943,21 @@ footer {
   gap: 24px;
 }
 .pkg h4 {
-  font-size: 22px;
+  font-size: var(--fs-3xl);
 }
 .pkg .lim {
   color: var(--strong);
   font-weight: 500;
-  font-size: 16px;
+  font-size: var(--fs-lg);
   line-height: 160%;
 }
 .pkg ul.marks li {
-  font-size: 16px;
+  font-size: var(--fs-lg);
   line-height: 170%;
   margin-bottom: 16px;
 }
 .pkg .io {
-  font-size: 15px;
+  font-size: var(--fs-md);
   padding-top: 0;
   border-top: 0;
 }
@@ -967,14 +967,14 @@ footer {
     gap: 20px;
   }
   .pkg h4 {
-    font-size: 20px;
+    font-size: var(--fs-2xl);
   }
   .pkg .lim,
   .pkg ul.marks li {
-    font-size: 15px;
+    font-size: var(--fs-md);
   }
   .pkg .io {
-    font-size: 14px;
+    font-size: var(--fs-base);
   }
 }
 .pkg .io {
@@ -998,19 +998,19 @@ footer {
 }
 .carbar h4 {
   margin: 0;
-  font-size: 16px;
+  font-size: var(--fs-lg);
   font-weight: 700;
   color: var(--strong);
 }
 .note {
   color: var(--faint);
-  font-size: 13px;
+  font-size: var(--fs-sm);
   line-height: 180%;
   margin-bottom: 20px;
 }
 .warn {
   color: var(--stop);
-  font-size: 13px;
+  font-size: var(--fs-sm);
   line-height: 180%;
   margin-bottom: 20px;
 }
@@ -1037,7 +1037,7 @@ footer {
   background: none;
   cursor: pointer;
   font-family: inherit;
-  font-size: 15px;
+  font-size: var(--fs-md);
   font-weight: 700;
   color: var(--strong);
   text-align: left;
@@ -1047,7 +1047,7 @@ footer {
 }
 .tgl .cnt {
   margin-left: auto;
-  font-size: 13px;
+  font-size: var(--fs-sm);
   font-weight: 400;
   color: var(--faint);
   white-space: nowrap;
@@ -1087,7 +1087,7 @@ footer {
   border-top: 1px solid var(--line);
 }
 .items .check {
-  font-size: 14px;
+  font-size: var(--fs-base);
 }
 .items .nm {
   flex: 1;
@@ -1099,7 +1099,7 @@ footer {
   align-content: start;
 }
 .itm .spec {
-  font-size: 13px;
+  font-size: var(--fs-sm);
   padding: 9px 12px;
 }
 .spec-call {
@@ -1115,7 +1115,7 @@ footer {
 
 .status {
   color: var(--hi-ink);
-  font-size: 13px;
+  font-size: var(--fs-sm);
 }
 
 /* mobile: iOS гасить box-shadow без appearance:none; шрифт <16px вмикає автозум при фокусі */
@@ -1137,6 +1137,6 @@ footer {
 @media (max-width: 60rem) {
   .input,
   .itm .spec {
-    font-size: 16px;
+    font-size: var(--fs-lg);
   }
 }

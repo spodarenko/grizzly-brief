@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { questionBlocks } from "../content/questions";
-import type { Translate } from "../lib/i18n";
+import { questionBlocks } from "../../content/questions";
+import type { Translate } from "../../lib/i18n";
 
 interface Props {
   saved: Record<string, number>;

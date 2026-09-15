@@ -6,6 +6,3 @@ export const STORAGE_KEY = "grizzly-brief-v1";
 
 export const BRAND = "GRIZZLY";
 export const COPYRIGHT_YEAR = 2026;
-
-/** Висота sticky-хедера; степер питань прилипає під ним */
-export const HEADER_HEIGHT = 80;

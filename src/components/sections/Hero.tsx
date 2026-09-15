@@ -1,6 +1,6 @@
-import type { CopyKey } from "../content/copy";
-import type { Translate } from "../lib/i18n";
-import { WithBrand } from "./Brand";
+import type { CopyKey } from "../../content/copy";
+import type { Translate } from "../../lib/i18n";
+import { WithBrand } from "../ui/Brand";
 
 const CELLS: [CopyKey, CopyKey][] = [
   ["c1l", "c1v"],

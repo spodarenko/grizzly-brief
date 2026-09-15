@@ -1,5 +1,5 @@
-import type { BriefApi } from "../app/useBrief";
-import type { QuestionField as Field } from "../types/brief";
+import type { BriefApi } from "../../app/useBrief";
+import type { QuestionField as Field } from "../../types/brief";
 
 export function QuestionField({ field, brief }: { field: Field; brief: BriefApi }) {
   const { state, setState, t } = brief;

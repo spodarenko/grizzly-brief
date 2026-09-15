@@ -1,9 +1,9 @@
 import { useRef } from "react";
-import type { BriefApi } from "../app/useBrief";
-import { questionBlocks } from "../content/questions";
-import { answerText } from "../lib/answers";
-import { QuestionField } from "./QuestionField";
-import { Stepper } from "./Stepper";
+import type { BriefApi } from "../../app/useBrief";
+import { questionBlocks } from "../../content/questions";
+import { answerText } from "../../lib/answers";
+import { QuestionField } from "../ui/QuestionField";
+import { Stepper } from "../ui/Stepper";
 
 export function Questions({ brief }: { brief: BriefApi }) {
   const { state, setState, t } = brief;
