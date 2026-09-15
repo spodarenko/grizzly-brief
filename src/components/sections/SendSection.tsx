@@ -1,7 +1,7 @@
 import { useState } from "react";
-import type { BriefApi } from "../app/useBrief";
-import { buildMessage } from "../lib/message";
-import { openWhatsApp } from "../lib/whatsapp";
+import type { BriefApi } from "../../app/useBrief";
+import { buildMessage } from "../../lib/message";
+import { openWhatsApp } from "../../lib/whatsapp";
 
 export function SendSection({ brief }: { brief: BriefApi }) {
   const { state, t } = brief;

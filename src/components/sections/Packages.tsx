@@ -1,6 +1,6 @@
 import { useState } from "react";
-import type { BriefApi } from "../app/useBrief";
-import { packages } from "../content/packages";
+import type { BriefApi } from "../../app/useBrief";
+import { packages } from "../../content/packages";
 
 export function Packages({ brief }: { brief: BriefApi }) {
   const { state, update, t } = brief;

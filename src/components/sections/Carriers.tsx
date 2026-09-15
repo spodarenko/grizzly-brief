@@ -1,8 +1,8 @@
 import { useState } from "react";
-import type { BriefApi } from "../app/useBrief";
-import { carrierGroups } from "../content/carriers";
-import { packages } from "../content/packages";
-import { totalItems, usedGroups } from "../lib/carriers";
+import type { BriefApi } from "../../app/useBrief";
+import { carrierGroups } from "../../content/carriers";
+import { packages } from "../../content/packages";
+import { totalItems, usedGroups } from "../../lib/carriers";
 
 export function Carriers({ brief }: { brief: BriefApi }) {
   const { state, setState, t } = brief;

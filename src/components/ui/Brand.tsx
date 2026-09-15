@@ -1,4 +1,4 @@
-import { BRAND } from "../config/site";
+import { BRAND } from "../../config/site";
 
 /** Рендерить текст, підсвічуючи {brand} */
 export function WithBrand({ text }: { text: string }) {
