@@ -26,10 +26,7 @@ export function buildMessage(state: BriefState, t: Translate): string {
     if (!selected.length) continue;
     any = true;
     out.push(`— ${group.name[state.lang]}:`);
-    for (const item of selected) {
-      const spec = (state.spec[item.id] ?? "").trim();
-      out.push(`   · ${item.name[state.lang]} — ${spec || t("spec_missing")}`);
-    }
+    for (const item of selected) out.push(`   · ${item.name[state.lang]}`);
   }
   if (!any) out.push(`— ${t("none")}`);
 

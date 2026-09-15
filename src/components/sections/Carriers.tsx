@@ -25,9 +25,6 @@ export function Carriers({ brief }: { brief: BriefApi }) {
       car: checked ? [...s.car.filter((x) => x !== id), id] : s.car.filter((x) => x !== id),
     }));
 
-  const setSpec = (id: string, v: string) =>
-    setState((s) => ({ ...s, spec: { ...s.spec, [id]: v } }));
-
   return (
     <>
       <div className="carbar">
@@ -85,15 +82,6 @@ export function Carriers({ brief }: { brief: BriefApi }) {
                           <span className="box" />
                           <span className="nm">{item.name[lang]}</span>
                         </label>
-                        {checked && (
-                          <input
-                            className="input spec"
-                            type="text"
-                            placeholder={g.hint[lang]}
-                            value={state.spec[item.id] ?? ""}
-                            onChange={(e) => setSpec(item.id, e.target.value)}
-                          />
-                        )}
                       </div>
                     );
                   })}
