@@ -16,16 +16,19 @@ npm run build    # збірка в dist/
 
 ## Де що лежить
 
-| Шлях                 | Що там                                                  |
-| -------------------- | ------------------------------------------------------- |
-| `src/app/`           | точка входу, `App`, стан брифу (`useBrief`)             |
-| `src/components/`    | секції сторінки: Hero, Questions, Packages, Carriers, … |
-| `src/content/`       | усі тексти UA/RU, пакети, перелік носіїв, питання       |
-| `src/config/`        | токени кольорів, номер WhatsApp, константи              |
-| `src/lib/`           | збірка повідомлення, WhatsApp, localStorage, i18n       |
-| `src/styles/`        | глобальні стилі                                         |
-| `docs/`              | специфікація брифу — джерело істини                     |
-| `.github/workflows/` | CI (`check` + `build`) і деплой на GitHub Pages         |
+| Шлях                       | Що там                                                   |
+| -------------------------- | -------------------------------------------------------- |
+| `src/app/`                 | точка входу, `App`, стан брифу (`useBrief`)              |
+| `src/pages/`               | сторінки (`BriefPage`)                                   |
+| `src/layouts/`             | каркас: `PageLayout`, `Header`, `Footer`                 |
+| `src/components/sections/` | секції: Hero, Questions, Packages, Carriers, SendSection |
+| `src/components/ui/`       | дрібні елементи: Stepper, QuestionField, WithBrand       |
+| `src/content/`             | тексти UA/RU, питання, пакети, носії                     |
+| `src/config/`              | кольори, типографіка, параметри UI, номер WhatsApp       |
+| `src/lib/`                 | логіка без React: повідомлення, WhatsApp, сховище, i18n  |
+| `src/styles/`              | глобальні стилі                                          |
+| `docs/`                    | специфікація, стайл-гайд, архітектура — джерело істини   |
+| `.github/workflows/`       | CI (`check` + `build`) і деплой на GitHub Pages          |
 
 ## Типові правки
 
