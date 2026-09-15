@@ -1,0 +1,82 @@
+/* Токени Контур DS + бренд-кольори GRIZZLY. Hex живуть тільки тут. */
+:root {
+  --bg: #ffffff;
+  --layer: #fafafa;
+  --layer-2: #eeeeee;
+  --line: #e6e6e6;
+  --line-strong: #cccccc;
+  --text: #5c5c5c;
+  --faint: #707070;
+  --strong: #161616;
+  --inverted: #ffffff;
+  --hi: #e2f3ea;
+  --hi-ink: #0b6b40;
+  --brand: #0f8a52;
+  --brand-ink: #ffffff;
+  --stop: #a4271c;
+
+  --pad: 5rem;
+  --vpad: 4rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161616;
+    --layer: #242424;
+    --layer-2: #303030;
+    --line: #2d2d2d;
+    --line-strong: #454545;
+    --text: #d4d4d4;
+    --faint: #a3a3a3;
+    --strong: #ffffff;
+    --inverted: #161616;
+    --hi: #12301f;
+    --hi-ink: #1dbf73;
+    --brand: #1dbf73;
+    --brand-ink: #161616;
+    --stop: #e8836f;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #161616;
+  --layer: #242424;
+  --layer-2: #303030;
+  --line: #2d2d2d;
+  --line-strong: #454545;
+  --text: #d4d4d4;
+  --faint: #a3a3a3;
+  --strong: #ffffff;
+  --inverted: #161616;
+  --hi: #12301f;
+  --hi-ink: #1dbf73;
+  --brand: #1dbf73;
+  --brand-ink: #161616;
+  --stop: #e8836f;
+}
+@media (max-width: 60rem) {
+  :root {
+    --pad: 16px;
+    --vpad: 3rem;
+  }
+}
+
+/* GRIZZLY: бренд-акцент поверх канону */
+:root {
+  --brand: #d61a55;
+  --brand-ink: #ffffff;
+  --hi: #fde8ef;
+  --hi-ink: #a3123f;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --brand: #ff5c8e;
+    --brand-ink: #161616;
+    --hi: #3a1524;
+    --hi-ink: #ff8fb1;
+  }
+}
+:root[data-theme="dark"] {
+  --brand: #ff5c8e;
+  --brand-ink: #161616;
+  --hi: #3a1524;
+  --hi-ink: #ff8fb1;
+}
