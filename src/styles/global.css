@@ -1157,3 +1157,9 @@ footer {
   color: var(--text);
   background: var(--bg);
 }
+
+/* Кнопка пакета — на всю ширину картки */
+.pkg .btn {
+  align-self: stretch;
+  text-align: center;
+}
