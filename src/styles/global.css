@@ -1163,3 +1163,9 @@ footer {
   align-self: stretch;
   text-align: center;
 }
+
+/* Список у картці пакета — щільніший */
+.pkg ul.marks li {
+  line-height: 150%;
+  margin-bottom: 10px;
+}
