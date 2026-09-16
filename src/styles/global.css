@@ -1170,21 +1170,14 @@ footer {
   margin-bottom: 10px;
 }
 
-/* Свої варіанти: блок під категоріями, чипи над полем */
+/* Свої варіанти: згортається як категорія, чипи такі ж, як обрані позиції */
 .own-block {
+  margin-top: 12px;
+}
+.own-body {
   display: grid;
-  gap: 12px;
-  margin-top: 24px;
-  padding: 18px 20px 20px;
-  box-shadow: inset 0 0 0 1px var(--line);
 }
-.own-block .own-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-.own-block .note {
+.own-body .note {
   margin: 0;
 }
 .own-chips {
@@ -1194,26 +1187,30 @@ footer {
 }
 .own {
   display: flex;
-  align-items: stretch;
-  color: var(--strong);
-  box-shadow: inset 0 0 0 1px var(--brand);
-}
-.own .nm {
-  padding: 11px 0 11px 16px;
+  align-items: center;
+  padding: 11px 16px;
   font-size: var(--fs-base);
   line-height: 1.3;
+  background: var(--brand);
+  color: var(--brand-ink);
+  box-shadow: inset 0 0 0 1px var(--brand);
 }
-.own .del {
+/* «×» на обраній позиції і на своєму варіанті */
+.opt .x,
+.own .x {
   font: inherit;
-  font-size: var(--fs-base);
-  color: var(--hi-ink);
+  font-style: normal;
+  color: inherit;
   background: none;
   border: 0;
-  padding: 0 14px 0 10px;
+  padding: 0;
+  margin-left: 10px;
+}
+.own .x {
   cursor: pointer;
 }
-.own .del:focus-visible {
-  outline: 2px solid var(--brand);
+.own .x:focus-visible {
+  outline: 2px solid var(--brand-ink);
   outline-offset: 2px;
 }
 .own-input.input {
