@@ -12,7 +12,6 @@ export interface Package {
   revisionRounds: number;
   badge: Localized | null;
   includes: Record<Lang, string[]>;
-  audience: Localized;
 }
 
 export interface CarrierItem {

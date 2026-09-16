@@ -979,6 +979,7 @@ footer {
 }
 .pkg .io {
   margin-top: auto;
+  color: var(--strong);
 }
 .pkg .btn {
   align-self: flex-start;
