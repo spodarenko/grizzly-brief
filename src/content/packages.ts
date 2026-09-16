@@ -5,6 +5,7 @@ export const packages: Package[] = [
     id: "basic",
     name: "Basic",
     categoryLimit: 2,
+    revisionRounds: 2,
     badge: null,
     includes: {
       uk: ["Логотип і його версії", "Палітра, шрифти, тон комунікації", "Маскот у системі бренду"],
@@ -19,6 +20,7 @@ export const packages: Package[] = [
     id: "pro",
     name: "Pro",
     categoryLimit: 5,
+    revisionRounds: 3,
     badge: {
       uk: "+ усе з Basic",
       ru: "+ всё из Basic",
@@ -36,6 +38,7 @@ export const packages: Package[] = [
     id: "premium",
     name: "Premium",
     categoryLimit: 8,
+    revisionRounds: 4,
     badge: {
       uk: "+ усе з Pro",
       ru: "+ всё из Pro",

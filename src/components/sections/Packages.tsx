@@ -35,7 +35,7 @@ export function Packages({ brief }: { brief: BriefApi }) {
               {p.badge && <span className="badge soft corner">{p.badge[lang]}</span>}
               <h4>{p.name}</h4>
               <p className="lim">{t("lim", { n: p.categoryLimit })}</p>
-              <p className="lim">{t("rounds")}</p>
+              <p className="lim">{t("rounds", { n: p.revisionRounds })}</p>
               <ul className="marks">
                 {p.includes[lang].map((x) => (
                   <li key={x}>{x}</li>

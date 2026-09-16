@@ -6,6 +6,8 @@ export interface Package {
   name: string;
   /** скільки категорій носіїв можна обрати */
   categoryLimit: number;
+  /** скільки раундів правок входить у пакет */
+  revisionRounds: number;
   badge: Localized | null;
   includes: Record<Lang, string[]>;
   audience: Localized;
