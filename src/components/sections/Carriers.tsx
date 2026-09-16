@@ -1,15 +1,19 @@
 import { useState } from "react";
+import type { KeyboardEvent } from "react";
 import type { BriefApi } from "../../app/useBrief";
 import { carrierGroups } from "../../content/carriers";
 import { packages } from "../../content/packages";
-import { totalItems, usedGroups } from "../../lib/carriers";
+import { ownCount, totalItems, usedGroups } from "../../lib/carriers";
 
 export function Carriers({ brief }: { brief: BriefApi }) {
   const { state, setState, t } = brief;
   const [open, setOpen] = useState<Set<string>>(new Set());
+  /** категорія, в якій зараз відкрите поле «Свій варіант» */
+  const [adding, setAdding] = useState<string | null>(null);
+  const [draft, setDraft] = useState("");
   const lang = state.lang;
   const pkg = packages.find((p) => p.id === state.pkg);
-  const used = usedGroups(state.car);
+  const used = usedGroups(state.car, state.own);
 
   const toggleOpen = (id: string) =>
     setOpen((prev) => {
@@ -25,6 +29,41 @@ export function Carriers({ brief }: { brief: BriefApi }) {
       car: checked ? [...s.car.filter((x) => x !== id), id] : s.car.filter((x) => x !== id),
     }));
 
+  const closeAdd = () => {
+    setAdding(null);
+    setDraft("");
+  };
+
+  const addOwn = (groupId: string) => {
+    const name = draft.trim();
+    if (name) {
+      setState((s) => {
+        const list = s.own[groupId] ?? [];
+        if (list.some((x) => x.toLowerCase() === name.toLowerCase())) return s;
+        return { ...s, own: { ...s.own, [groupId]: [...list, name] } };
+      });
+    }
+    setDraft("");
+  };
+
+  const removeOwn = (groupId: string, name: string) =>
+    setState((s) => {
+      const list = (s.own[groupId] ?? []).filter((x) => x !== name);
+      const own = { ...s.own };
+      if (list.length) own[groupId] = list;
+      else delete own[groupId];
+      return { ...s, own };
+    });
+
+  const onDraftKey = (e: KeyboardEvent<HTMLInputElement>, groupId: string) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      addOwn(groupId);
+    } else if (e.key === "Escape") {
+      closeAdd();
+    }
+  };
+
   return (
     <>
       <div className="carbar">
@@ -32,7 +71,7 @@ export function Carriers({ brief }: { brief: BriefApi }) {
           {t("car_h", {
             ug: used.size,
             g: carrierGroups.length,
-            un: state.car.length,
+            un: state.car.length + ownCount(state.own),
             n: totalItems,
           })}
         </h4>
@@ -47,7 +86,8 @@ export function Carriers({ brief }: { brief: BriefApi }) {
       <div className="cgroups">
         {carrierGroups.map((g) => {
           const isOpen = open.has(g.id);
-          const count = g.items.filter((i) => state.car.includes(i.id)).length;
+          const own = state.own[g.id] ?? [];
+          const count = g.items.filter((i) => state.car.includes(i.id)).length + own.length;
           const locked = !pkg || (!used.has(g.id) && used.size >= pkg.categoryLimit);
           return (
             <div className="cg" key={g.id}>
@@ -79,6 +119,46 @@ export function Carriers({ brief }: { brief: BriefApi }) {
                       <span>{item.name[lang]}</span>
                     </label>
                   ))}
+                  {own.map((name) => (
+                    <span className="own" key={name}>
+                      <span className="nm">{name}</span>
+                      <button
+                        type="button"
+                        className="del"
+                        aria-label={`${t("own_del")}: ${name}`}
+                        onClick={() => removeOwn(g.id, name)}
+                      >
+                        ×
+                      </button>
+                    </span>
+                  ))}
+                  {adding === g.id && !locked ? (
+                    <input
+                      className="input own-input"
+                      autoFocus
+                      value={draft}
+                      placeholder={t("own_ph")}
+                      aria-label={t("own_ph")}
+                      onChange={(e) => setDraft(e.target.value)}
+                      onKeyDown={(e) => onDraftKey(e, g.id)}
+                      onBlur={() => {
+                        addOwn(g.id);
+                        closeAdd();
+                      }}
+                    />
+                  ) : (
+                    <button
+                      type="button"
+                      className="own-add"
+                      disabled={locked}
+                      onClick={() => {
+                        setDraft("");
+                        setAdding(g.id);
+                      }}
+                    >
+                      {t("own_add")}
+                    </button>
+                  )}
                 </div>
               )}
             </div>

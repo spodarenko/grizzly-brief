@@ -1169,3 +1169,54 @@ footer {
   line-height: 150%;
   margin-bottom: 10px;
 }
+
+/* Свій носій: чип з кнопкою «×» і поле додавання */
+.own {
+  display: flex;
+  align-items: stretch;
+  background: var(--brand);
+  color: var(--brand-ink);
+  box-shadow: inset 0 0 0 1px var(--brand);
+}
+.own .nm {
+  padding: 11px 0 11px 16px;
+  font-size: var(--fs-base);
+  line-height: 1.3;
+}
+.own .del {
+  font: inherit;
+  font-size: var(--fs-base);
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0 14px 0 10px;
+  cursor: pointer;
+}
+.own .del:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+.own-add {
+  font: inherit;
+  font-size: var(--fs-base);
+  line-height: 1.3;
+  padding: 11px 16px;
+  color: var(--text);
+  background: none;
+  border: 0;
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+  cursor: pointer;
+}
+.own-add:hover:not(:disabled) {
+  color: var(--strong);
+  background: var(--layer-2);
+}
+.own-add:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.own-input.input {
+  width: auto;
+  flex: 1 1 16rem;
+  padding: 11px 16px;
+}

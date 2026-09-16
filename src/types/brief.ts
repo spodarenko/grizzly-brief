@@ -55,6 +55,8 @@ export interface BriefState {
   pkg: string | null;
   /** id обраних позицій носіїв */
   car: string[];
+  /** свої носії клієнта: id категорії → назви */
+  own: Record<string, string[]>;
   /** розміри / опис для кожної позиції */
   spec: Record<string, string>;
   /** відповіді на питання: id поля → значення */
