@@ -1,13 +1,9 @@
-import { BRAND, COPYRIGHT_YEAR } from "../config/site";
 import type { Translate } from "../lib/i18n";
 
 export function Footer({ t }: { t: Translate }) {
   return (
     <footer>
       <nav className="fnav">
-        <span>
-          ©{COPYRIGHT_YEAR} {BRAND}
-        </span>
         <a href="#questions">{t("nav_q")}</a>
         <a href="#package">{t("nav_pkg")}</a>
         <a href="#top">{t("nav_top")}</a>
