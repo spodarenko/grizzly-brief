@@ -7,6 +7,9 @@ import type { CopyKey } from "../../content/copy";
 import { packages } from "../../content/packages";
 import { totalItems, usedGroups } from "../../lib/carriers";
 
+/** id згортання блоку «Свої варіанти» поруч з id категорій */
+const OWN_ID = "own";
+
 export function Carriers({ brief }: { brief: BriefApi }) {
   const { state, setState, t } = brief;
   const [open, setOpen] = useState<Set<string>>(new Set());
@@ -104,7 +107,14 @@ export function Carriers({ brief }: { brief: BriefApi }) {
                         disabled={locked}
                         onChange={(e) => toggleItem(item.id, e.target.checked)}
                       />
-                      <span>{item.name[lang]}</span>
+                      <span>
+                        {item.name[lang]}
+                        {state.car.includes(item.id) && (
+                          <i className="x" aria-hidden="true">
+                            ×
+                          </i>
+                        )}
+                      </span>
                     </label>
                   ))}
                 </div>
@@ -113,51 +123,62 @@ export function Carriers({ brief }: { brief: BriefApi }) {
           );
         })}
       </div>
-      <div className="own-block">
-        <div className="own-head">
-          <h4>{t("own_h")}</h4>
-          {pkg && (
-            <span className={`cnt${state.own.length ? " has" : ""}`}>
-              {state.own.length}/{ownLimit}
-            </span>
-          )}
-        </div>
-        <p className="note">{t(!pkg ? "own_none" : ownFull ? "own_full" : "own_p")}</p>
-        {state.own.length > 0 && (
-          <div className="own-chips">
-            {state.own.map((name) => (
-              <span className="own" key={name}>
-                <span className="nm">{name}</span>
-                <button
-                  type="button"
-                  className="del"
-                  aria-label={`${t("own_del")}: ${name}`}
-                  onClick={() => removeOwn(name)}
-                >
-                  ×
-                </button>
-              </span>
-            ))}
+      <div className="cg own-block">
+        <button
+          type="button"
+          className="tgl"
+          aria-expanded={open.has(OWN_ID)}
+          aria-controls={`cg-${OWN_ID}`}
+          onClick={() => toggleOpen(OWN_ID)}
+        >
+          <span>{t("own_h")}</span>
+          <span className={`cnt${state.own.length ? " has" : ""}`}>
+            {state.own.length
+              ? `${t("cnt")} ${state.own.length} ${t("of")} ${ownLimit}`
+              : String(ownLimit)}
+          </span>
+          <span className="pm" />
+        </button>
+        {open.has(OWN_ID) && (
+          <div className="items own-body" id={`cg-${OWN_ID}`}>
+            <p className="note">{t(!pkg ? "own_none" : ownFull ? "own_full" : "own_p")}</p>
+            {state.own.length > 0 && (
+              <div className="own-chips">
+                {state.own.map((name) => (
+                  <span className="own" key={name}>
+                    {name}
+                    <button
+                      type="button"
+                      className="x"
+                      aria-label={`${t("own_del")}: ${name}`}
+                      onClick={() => removeOwn(name)}
+                    >
+                      ×
+                    </button>
+                  </span>
+                ))}
+              </div>
+            )}
+            <input
+              className="input own-input"
+              value={draft}
+              maxLength={OWN_NAME_MAX}
+              disabled={!pkg || ownFull}
+              placeholder={t("own_ph")}
+              aria-label={t("own_ph")}
+              aria-invalid={Boolean(error)}
+              onChange={(e) => {
+                setDraft(e.target.value);
+                setError(null);
+              }}
+              onKeyDown={onDraftKey}
+            />
+            {error && (
+              <p className="own-err" role="alert">
+                {t(error, { n: OWN_NAME_MIN })}
+              </p>
+            )}
           </div>
-        )}
-        <input
-          className="input own-input"
-          value={draft}
-          maxLength={OWN_NAME_MAX}
-          disabled={!pkg || ownFull}
-          placeholder={t("own_ph")}
-          aria-label={t("own_ph")}
-          aria-invalid={Boolean(error)}
-          onChange={(e) => {
-            setDraft(e.target.value);
-            setError(null);
-          }}
-          onKeyDown={onDraftKey}
-        />
-        {error && (
-          <p className="own-err" role="alert">
-            {t(error, { n: OWN_NAME_MIN })}
-          </p>
         )}
       </div>
     </>
