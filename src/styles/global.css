@@ -1220,3 +1220,8 @@ footer {
   flex: 1 1 16rem;
   padding: 11px 16px;
 }
+
+/* Підказка біля неактивної «Зберегти» */
+.qbar .note {
+  margin: 0;
+}
