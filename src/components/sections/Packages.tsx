@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { BriefApi } from "../../app/useBrief";
 import { packages } from "../../content/packages";
+import { ownCount } from "../../lib/carriers";
 
 export function Packages({ brief }: { brief: BriefApi }) {
   const { state, update, t } = brief;
@@ -9,12 +10,12 @@ export function Packages({ brief }: { brief: BriefApi }) {
 
   const choose = (id: string) => {
     if (id === state.pkg) return;
-    if (state.car.length) setPending(id);
+    if (state.car.length || ownCount(state.own)) setPending(id);
     else update({ pkg: id });
   };
 
   const confirm = () => {
-    if (pending) update({ pkg: pending, car: [], spec: {} });
+    if (pending) update({ pkg: pending, car: [], own: {}, spec: {} });
     setPending(null);
   };
 

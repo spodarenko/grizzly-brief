@@ -18,15 +18,19 @@ export function buildMessage(state: BriefState, t: Translate): string {
 
   const pkg = packages.find((p) => p.id === state.pkg);
   out.push(`${t("out_pkg")}: ${pkg ? pkg.name : t("none")}`);
-  out.push(`${t("out_car")} (${usedGroups(state.car).size} ${t("of")} ${carrierGroups.length}):`);
+  out.push(
+    `${t("out_car")} (${usedGroups(state.car, state.own).size} ${t("of")} ${carrierGroups.length}):`,
+  );
 
   let any = false;
   for (const group of carrierGroups) {
     const selected = group.items.filter((i) => state.car.includes(i.id));
-    if (!selected.length) continue;
+    const own = state.own[group.id] ?? [];
+    if (!selected.length && !own.length) continue;
     any = true;
     out.push(`— ${group.name[state.lang]}:`);
     for (const item of selected) out.push(`   · ${item.name[state.lang]}`);
+    for (const name of own) out.push(`   · ${name} (${t("own_mark")})`);
   }
   if (!any) out.push(`— ${t("none")}`);
 
