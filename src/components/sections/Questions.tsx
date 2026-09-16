@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import type { BriefApi } from "../../app/useBrief";
 import { questionBlocks } from "../../content/questions";
-import { answerText } from "../../lib/answers";
+import { answerText, isAnswered } from "../../lib/answers";
 import { QuestionField } from "../ui/QuestionField";
 import { Stepper } from "../ui/Stepper";
 
@@ -32,6 +32,7 @@ export function Questions({ brief }: { brief: BriefApi }) {
       <div className="qwrap">
         {questionBlocks.map((block) => {
           const savedAt = state.saved[block.id];
+          const complete = block.fields.every((f) => isAnswered(f, state));
           return (
             <div
               key={block.id}
@@ -74,10 +75,12 @@ export function Questions({ brief }: { brief: BriefApi }) {
                 <button
                   type="button"
                   className={`btn sm${savedAt ? " secondary" : ""}`}
+                  disabled={!savedAt && !complete}
                   onClick={() => toggleSaved(block.id)}
                 >
                   {t(savedAt ? "edit" : "save")}
                 </button>
+                {!savedAt && !complete && <p className="note">{t("save_need")}</p>}
               </div>
             </div>
           );
