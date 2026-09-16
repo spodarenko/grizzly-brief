@@ -1,19 +1,22 @@
 import { useState } from "react";
 import type { KeyboardEvent } from "react";
 import type { BriefApi } from "../../app/useBrief";
+import { OWN_NAME_MAX, OWN_NAME_MIN } from "../../config/site";
 import { carrierGroups } from "../../content/carriers";
+import type { CopyKey } from "../../content/copy";
 import { packages } from "../../content/packages";
-import { ownCount, totalItems, usedGroups } from "../../lib/carriers";
+import { totalItems, usedGroups } from "../../lib/carriers";
 
 export function Carriers({ brief }: { brief: BriefApi }) {
   const { state, setState, t } = brief;
   const [open, setOpen] = useState<Set<string>>(new Set());
-  /** категорія, в якій зараз відкрите поле «Свій варіант» */
-  const [adding, setAdding] = useState<string | null>(null);
   const [draft, setDraft] = useState("");
+  const [error, setError] = useState<CopyKey | null>(null);
   const lang = state.lang;
   const pkg = packages.find((p) => p.id === state.pkg);
-  const used = usedGroups(state.car, state.own);
+  const used = usedGroups(state.car);
+  const ownLimit = pkg?.ownLimit ?? 0;
+  const ownFull = state.own.length >= ownLimit;
 
   const toggleOpen = (id: string) =>
     setOpen((prev) => {
@@ -29,39 +32,25 @@ export function Carriers({ brief }: { brief: BriefApi }) {
       car: checked ? [...s.car.filter((x) => x !== id), id] : s.car.filter((x) => x !== id),
     }));
 
-  const closeAdd = () => {
-    setAdding(null);
+  const addOwn = () => {
+    const name = draft.trim().replace(/\s+/g, " ");
+    if (!name) return;
+    if (/[,;]/.test(name)) return setError("own_list");
+    if (name.length < OWN_NAME_MIN) return setError("own_short");
+    if (state.own.some((x) => x.toLowerCase() === name.toLowerCase())) return setError("own_dup");
+    if (ownFull) return;
+    setState((s) => ({ ...s, own: [...s.own, name] }));
     setDraft("");
+    setError(null);
   };
 
-  const addOwn = (groupId: string) => {
-    const name = draft.trim();
-    if (name) {
-      setState((s) => {
-        const list = s.own[groupId] ?? [];
-        if (list.some((x) => x.toLowerCase() === name.toLowerCase())) return s;
-        return { ...s, own: { ...s.own, [groupId]: [...list, name] } };
-      });
-    }
-    setDraft("");
-  };
+  const removeOwn = (name: string) =>
+    setState((s) => ({ ...s, own: s.own.filter((x) => x !== name) }));
 
-  const removeOwn = (groupId: string, name: string) =>
-    setState((s) => {
-      const list = (s.own[groupId] ?? []).filter((x) => x !== name);
-      const own = { ...s.own };
-      if (list.length) own[groupId] = list;
-      else delete own[groupId];
-      return { ...s, own };
-    });
-
-  const onDraftKey = (e: KeyboardEvent<HTMLInputElement>, groupId: string) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      addOwn(groupId);
-    } else if (e.key === "Escape") {
-      closeAdd();
-    }
+  const onDraftKey = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key !== "Enter") return;
+    e.preventDefault();
+    addOwn();
   };
 
   return (
@@ -71,7 +60,7 @@ export function Carriers({ brief }: { brief: BriefApi }) {
           {t("car_h", {
             ug: used.size,
             g: carrierGroups.length,
-            un: state.car.length + ownCount(state.own),
+            un: state.car.length,
             n: totalItems,
           })}
         </h4>
@@ -86,8 +75,7 @@ export function Carriers({ brief }: { brief: BriefApi }) {
       <div className="cgroups">
         {carrierGroups.map((g) => {
           const isOpen = open.has(g.id);
-          const own = state.own[g.id] ?? [];
-          const count = g.items.filter((i) => state.car.includes(i.id)).length + own.length;
+          const count = g.items.filter((i) => state.car.includes(i.id)).length;
           const locked = !pkg || (!used.has(g.id) && used.size >= pkg.categoryLimit);
           return (
             <div className="cg" key={g.id}>
@@ -119,51 +107,58 @@ export function Carriers({ brief }: { brief: BriefApi }) {
                       <span>{item.name[lang]}</span>
                     </label>
                   ))}
-                  {own.map((name) => (
-                    <span className="own" key={name}>
-                      <span className="nm">{name}</span>
-                      <button
-                        type="button"
-                        className="del"
-                        aria-label={`${t("own_del")}: ${name}`}
-                        onClick={() => removeOwn(g.id, name)}
-                      >
-                        ×
-                      </button>
-                    </span>
-                  ))}
-                  {adding === g.id && !locked ? (
-                    <input
-                      className="input own-input"
-                      autoFocus
-                      value={draft}
-                      placeholder={t("own_ph")}
-                      aria-label={t("own_ph")}
-                      onChange={(e) => setDraft(e.target.value)}
-                      onKeyDown={(e) => onDraftKey(e, g.id)}
-                      onBlur={() => {
-                        addOwn(g.id);
-                        closeAdd();
-                      }}
-                    />
-                  ) : (
-                    <button
-                      type="button"
-                      className="own-add"
-                      disabled={locked}
-                      onClick={() => {
-                        setDraft("");
-                        setAdding(g.id);
-                      }}
-                    >
-                      {t("own_add")}
-                    </button>
-                  )}
                 </div>
               )}
             </div>
           );
         })}
+      </div>
+      <div className="own-block">
+        <div className="own-head">
+          <h4>{t("own_h")}</h4>
+          {pkg && (
+            <span className={`cnt${state.own.length ? " has" : ""}`}>
+              {state.own.length}/{ownLimit}
+            </span>
+          )}
+        </div>
+        <p className="note">{t(!pkg ? "own_none" : ownFull ? "own_full" : "own_p")}</p>
+        {state.own.length > 0 && (
+          <div className="own-chips">
+            {state.own.map((name) => (
+              <span className="own" key={name}>
+                <span className="nm">{name}</span>
+                <button
+                  type="button"
+                  className="del"
+                  aria-label={`${t("own_del")}: ${name}`}
+                  onClick={() => removeOwn(name)}
+                >
+                  ×
+                </button>
+              </span>
+            ))}
+          </div>
+        )}
+        <input
+          className="input own-input"
+          value={draft}
+          maxLength={OWN_NAME_MAX}
+          disabled={!pkg || ownFull}
+          placeholder={t("own_ph")}
+          aria-label={t("own_ph")}
+          aria-invalid={Boolean(error)}
+          onChange={(e) => {
+            setDraft(e.target.value);
+            setError(null);
+          }}
+          onKeyDown={onDraftKey}
+        />
+        {error && (
+          <p className="own-err" role="alert">
+            {t(error, { n: OWN_NAME_MIN })}
+          </p>
+        )}
       </div>
     </>
   );

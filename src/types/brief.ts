@@ -6,6 +6,8 @@ export interface Package {
   name: string;
   /** скільки категорій носіїв можна обрати */
   categoryLimit: number;
+  /** скільки своїх носіїв можна додати */
+  ownLimit: number;
   /** скільки раундів правок входить у пакет */
   revisionRounds: number;
   badge: Localized | null;
@@ -55,8 +57,8 @@ export interface BriefState {
   pkg: string | null;
   /** id обраних позицій носіїв */
   car: string[];
-  /** свої носії клієнта: id категорії → назви */
-  own: Record<string, string[]>;
+  /** свої носії клієнта, поза категоріями */
+  own: string[];
   /** розміри / опис для кожної позиції */
   spec: Record<string, string>;
   /** відповіді на питання: id поля → значення */
