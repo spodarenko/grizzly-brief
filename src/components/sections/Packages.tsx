@@ -35,16 +35,13 @@ export function Packages({ brief }: { brief: BriefApi }) {
               {p.badge && <span className="badge soft corner">{p.badge[lang]}</span>}
               <h4>{p.name}</h4>
               <p className="lim">{t("lim", { n: p.categoryLimit })}</p>
-              <p className="lim">{t("rounds", { n: p.revisionRounds })}</p>
               <p className="lim">{t("own_lim", { n: p.ownLimit })}</p>
               <ul className="marks">
                 {p.includes[lang].map((x) => (
                   <li key={x}>{x}</li>
                 ))}
               </ul>
-              <p className="io">
-                <b>{t("for")}</b> {p.audience[lang]}
-              </p>
+              <p className="io">{t("rounds", { n: p.revisionRounds })}</p>
               <button
                 type="button"
                 className={`btn ${on ? "brand" : "secondary"}`}
