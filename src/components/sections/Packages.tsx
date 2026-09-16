@@ -1,7 +1,6 @@
 import { useState } from "react";
 import type { BriefApi } from "../../app/useBrief";
 import { packages } from "../../content/packages";
-import { ownCount } from "../../lib/carriers";
 
 export function Packages({ brief }: { brief: BriefApi }) {
   const { state, update, t } = brief;
@@ -10,12 +9,12 @@ export function Packages({ brief }: { brief: BriefApi }) {
 
   const choose = (id: string) => {
     if (id === state.pkg) return;
-    if (state.car.length || ownCount(state.own)) setPending(id);
+    if (state.car.length || state.own.length) setPending(id);
     else update({ pkg: id });
   };
 
   const confirm = () => {
-    if (pending) update({ pkg: pending, car: [], own: {}, spec: {} });
+    if (pending) update({ pkg: pending, car: [], own: [], spec: {} });
     setPending(null);
   };
 
@@ -37,6 +36,7 @@ export function Packages({ brief }: { brief: BriefApi }) {
               <h4>{p.name}</h4>
               <p className="lim">{t("lim", { n: p.categoryLimit })}</p>
               <p className="lim">{t("rounds", { n: p.revisionRounds })}</p>
+              <p className="lim">{t("own_lim", { n: p.ownLimit })}</p>
               <ul className="marks">
                 {p.includes[lang].map((x) => (
                   <li key={x}>{x}</li>

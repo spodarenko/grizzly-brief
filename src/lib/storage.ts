@@ -1,6 +1,6 @@
 import { STORAGE_KEY } from "../config/site";
 import type { BriefState } from "../types/brief";
-import { carrierGroups } from "../content/carriers";
+import { packages } from "../content/packages";
 import { questionBlocks } from "../content/questions";
 import { isAnswered } from "./answers";
 import { itemGroup } from "./carriers";
@@ -9,7 +9,7 @@ export const emptyState: BriefState = {
   lang: "uk",
   pkg: null,
   car: [],
-  own: {},
+  own: [],
   spec: {},
   ans: {},
   saved: {},
@@ -22,11 +22,10 @@ export function loadState(): BriefState {
     const state: BriefState = { ...emptyState, ...raw };
     if (state.lang !== "uk" && state.lang !== "ru") state.lang = "uk";
     state.car = (state.car ?? []).filter((id) => itemGroup[id]);
-    state.own = Object.fromEntries(
-      carrierGroups
-        .map((g) => [g.id, (state.own?.[g.id] ?? []).filter((x) => typeof x === "string" && x)])
-        .filter(([, names]) => names.length),
-    );
+    const pkg = packages.find((p) => p.id === state.pkg);
+    state.own = Array.isArray(state.own)
+      ? state.own.filter((x) => typeof x === "string" && x.trim()).slice(0, pkg?.ownLimit ?? 0)
+      : [];
     const incomplete = questionBlocks
       .filter((b) => !b.fields.every((f) => isAnswered(f, state)))
       .map((b) => b.id);
@@ -35,7 +34,6 @@ export function loadState(): BriefState {
     );
     if (!state.pkg) {
       state.car = [];
-      state.own = {};
       state.spec = {};
     }
     return state;

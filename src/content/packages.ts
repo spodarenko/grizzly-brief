@@ -5,6 +5,7 @@ export const packages: Package[] = [
     id: "basic",
     name: "Basic",
     categoryLimit: 2,
+    ownLimit: 2,
     revisionRounds: 2,
     badge: null,
     includes: {
@@ -20,6 +21,7 @@ export const packages: Package[] = [
     id: "pro",
     name: "Pro",
     categoryLimit: 5,
+    ownLimit: 4,
     revisionRounds: 3,
     badge: {
       uk: "+ усе з Basic",
@@ -38,6 +40,7 @@ export const packages: Package[] = [
     id: "premium",
     name: "Premium",
     categoryLimit: 8,
+    ownLimit: 6,
     revisionRounds: 4,
     badge: {
       uk: "+ усе з Pro",
