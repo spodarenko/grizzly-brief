@@ -9,3 +9,4 @@ export const OWN_NAME_MIN = 2;
 export const OWN_NAME_MAX = 40;
 
 export const BRAND = "GRIZZLY";
+export const COPYRIGHT_YEAR = 2026;
